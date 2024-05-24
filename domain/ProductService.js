@@ -10,17 +10,19 @@ class ProductService {
         return this.productRepository.save(product);
     }
 
-    editProduct(id) {
-        const product = this.productRepository.findById(id);
-        if (product) {
-            product.edit();
-            return this.productRepository.save(product);
-        }
-        return null;
+    editProduct(id,data) {
+        const product = new this.productRepository.ProductClass(
+            data
+        );
+        return this.productRepository.editProduct(id,product);
     }
 
-    async listProducts() {
-        return await this.productRepository.findAll();
+    deleteProduct(id) {
+        return this.productRepository.deleteProduct(id);
+    }
+
+    listProducts() {
+        return this.productRepository.findAll();
     }
 }
 

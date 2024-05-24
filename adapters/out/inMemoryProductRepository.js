@@ -19,29 +19,49 @@ class InMemoryProductRepository extends ProductRepositoryPort {
     }
 
     save(data) {
-        console.log(data)
-        const values = [data.name];
-        this.con.query("INSERT INTO products(name) VALUES (?)", values, (err, result) => {
-            if (err) throw err;
-            console.log("Produto inserido");
-            return ("Produto inserido");
+        return new Promise((resolve, reject) => {
+            console.log("DATA SAVE:", data)
+            const values = [data.body.name];
+            this.con.query("INSERT INTO products(name) VALUES (?)", values, (err, result) => {
+                if (err) reject(err);
+                console.log("Produto inserido!");
+                resolve("Produto inserido!");
+            });
         });
     }
 
-    findById(id) {
-        return this.products.find(product => product.id === id);
+    editProduct(id,data) {
+        return new Promise((resolve, reject) => {
+            console.log("DATA EDIT:", data)
+            console.log("ID EDIT:", id)
+            const values = [data.body.name, id]
+            this.con.query("UPDATE products set name = (?) WHERE id = (?)", values, (err, result) => {
+                if (err) reject(err);
+                console.log("Produto Editado!");
+                resolve("Produto Editado!");
+            });
+        });
+    }
+
+    deleteProduct(id) {
+        return new Promise((resolve, reject) => {
+            console.log("ID DELETE:", id)
+            const values = [id]
+            this.con.query("DELETE from products WHERE id = (?)", values, (err, result) => {
+                if (err) reject(err);
+                console.log("Produto Deletado!");
+                resolve("Produto Deletado!");
+            });
+        });
     }
 
     findAll() {
-        this.con.query("SELECT * FROM products", function (err, result, fields) {
-            if (err) throw err;
-            console.log(result);
-            return result
+        return new Promise((resolve, reject) => {
+            this.con.query("SELECT * FROM products", function (err, result) {
+                if (err) reject(err);
+                resolve(result);
+            });
         });
-    }
-
-    nextId() {
-        return this.products.length + 1;
     }
 
     get ProductClass() {

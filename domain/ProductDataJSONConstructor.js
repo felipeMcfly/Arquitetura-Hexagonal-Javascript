@@ -1,6 +1,6 @@
 class Data {
-    constructor(name) {
-        this.name = name;
+    constructor(body) {
+        this.body = body;
     }
 }
 
