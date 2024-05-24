@@ -1,5 +1,5 @@
-class TaskRepositoryPort {
-    save(task) {
+class ProductRepositoryPort {
+    save(product) {
         throw new Error("Not implemented");
     }
 
@@ -16,4 +16,4 @@ class TaskRepositoryPort {
     }
 }
 
-module.exports = TaskRepositoryPort
+module.exports = ProductRepositoryPort
